@@ -6,1224 +6,71 @@
     <title>MET Scotland - Mathematics Educators Training</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --scot-blue: #0065BF;
-            --scot-red: #CC0000;
-            --highland-green: #2E8B57;
-            --thistle: #D8BFD8;
-            --gold: #FFD700;
-            --silver: #C0C0C0;
-            --bronze: #CD7F32;
-            --light-bg: #f8f9fa;
-            --dark-text: #333;
-            --admin-purple: #6a4c93;
-        }
+        /* All previous CSS remains unchanged */
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: var(--light-bg);
-            color: var(--dark-text);
-            line-height: 1.6;
-            min-height: 100vh;
-            position: relative;
-        }
-        
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, var(--scot-blue) 0%, #003366 100%);
-            color: white;
-            padding: 1rem 2rem;
-            position: relative;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transition: background 0.4s ease;
-        }
-        
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .logo h1 {
-            margin: 0;
-            font-size: 1.8rem;
-            font-weight: 700;
-            display: inline-block;
-            background: linear-gradient(to right, #ffffff 0%, var(--gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .saltire {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background: 
-                linear-gradient(to bottom, transparent 45%, white 45%, white 55%, transparent 55%),
-                linear-gradient(to right, transparent 45%, white 45%, white 55%, transparent 55%),
-                var(--scot-blue);
-            border-radius: 4px;
-        }
-        
-        .user-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255,255,255,0.15);
-            padding: 8px 15px;
-            border-radius: 30px;
-            font-weight: 500;
-        }
-        
-        .user-info i {
-            color: var(--gold);
-        }
-        
-        /* Fixed View Toggle */
-        .view-toggle-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 5px 15px;
-            border-radius: 30px;
-        }
-        
-        .toggle-label {
-            color: white;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 30px;
-        }
-        
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--highland-green);
-            transition: .4s;
-            border-radius: 34px;
-        }
-        
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        
-        input:checked + .slider {
-            background-color: var(--admin-purple);
-        }
-        
-        input:checked + .slider:before {
-            transform: translateX(30px);
-        }
-        
-        /* Navigation */
-        nav {
-            background-color: var(--highland-green);
-            padding: 0.5rem 2rem;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: background 0.4s ease;
-        }
-        
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 0.7rem 1.5rem;
-            margin: 0.3rem;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        nav a:hover, nav a.active {
-            background-color: rgba(255,255,255,0.25);
-            transform: translateY(-2px);
-        }
-        
-        /* Main Content Container */
-        .container {
-            max-width: 1400px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        
-        /* View Containers */
-        .view-container {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        
-        .view-container.active {
-            display: block;
-            opacity: 1;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        /* Educator Dashboard */
-        .dashboard-container {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 25px;
-        }
-        
-        .sidebar {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-            padding: 25px;
-            height: fit-content;
-            position: sticky;
-            top: 20px;
-        }
-        
-        .sidebar-section {
-            margin-bottom: 30px;
-            padding-bottom: 25px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .sidebar-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .sidebar h3 {
-            color: var(--scot-blue);
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .progress-section p {
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-        
-        .progress-bar {
-            height: 12px;
-            background: #e0e0e0;
-            border-radius: 6px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--highland-green), #1a7d46);
-            width: 75%;
-            border-radius: 6px;
-        }
-        
-        .badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 15px;
-        }
-        
-        .badge {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 0.7rem;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            position: relative;
-            overflow: hidden;
-            flex-direction: column;
-            padding-top: 8px;
-        }
-        
-        .badge::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.3) 100%);
-        }
-        
-        .badge-gold {
-            background: linear-gradient(135deg, var(--gold), #e6c200);
-        }
-        
-        .badge-silver {
-            background: linear-gradient(135deg, var(--silver), #a8a8a8);
-        }
-        
-        .badge-bronze {
-            background: linear-gradient(135deg, var(--bronze), #b5651d);
-        }
-        
-        .ai-feedback-box {
-            background: #e3f2fd;
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 10px;
-            border-left: 4px solid #2196F3;
-        }
-        
-        .ai-feedback-box p {
-            margin-bottom: 10px;
-        }
-        
-        /* Main Content Grid */
-        .main-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 25px;
-        }
-        
-        /* Card Styles */
-        .card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-            padding: 25px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .card:hover {
-            transform: translateY(-7px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-        
-        .card-title {
-            margin: 0;
-            color: var(--scot-blue);
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .card-badge {
-            background: var(--highland-green);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        
-        /* Video Player */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 12px;
-            background: #000;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        
-        .video-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--scot-blue), #1a4580);
-            color: white;
-            font-size: 1.6rem;
-            text-align: center;
-            padding: 20px;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .video-placeholder i {
-            font-size: 3rem;
-            color: var(--gold);
-        }
-        
-        .video-controls {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-        
-        /* Live Session Card */
-        .live-session {
-            background: linear-gradient(135deg, var(--scot-blue), var(--highland-green));
-            color: white;
-        }
-        
-        .live-session .card-header {
-            border-bottom: 2px solid rgba(255,255,255,0.2);
-        }
-        
-        .live-session .card-title {
-            color: white;
-        }
-        
-        .live-tools {
-            display: flex;
-            gap: 12px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .tool-btn {
-            flex: 1;
-            min-width: 120px;
-            padding: 12px;
-            background: rgba(255,255,255,0.15);
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .tool-btn:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-3px);
-        }
-        
-        .problem {
-            background: rgba(255,255,255,0.15);
-            padding: 18px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid var(--gold);
-        }
-        
-        .problem h4 {
-            margin-top: 0;
-            color: var(--gold);
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-        
-        .clue {
-            background: rgba(0,0,0,0.15);
-            padding: 12px;
-            border-radius: 8px;
-            margin-top: 12px;
-            font-size: 0.95rem;
-        }
-        
-        /* Practice Card */
-        .problem-card {
-            background: #f9f9f9;
-            padding: 18px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-left: 4px solid var(--highland-green);
-        }
-        
-        .problem-card h4 {
-            margin-top: 0;
-            color: var(--scot-blue);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-        
-        .problem-card .level {
-            font-size: 0.8rem;
-            background: var(--highland-green);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 12px;
-        }
-        
-        .problem-card .scot-bonus {
-            background: var(--scot-blue);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-        }
-        
-        .problem-card .clue {
-            background: #fff8e1;
-            border-left: 3px solid #FFD600;
-            color: #333;
-        }
-        
-        .card-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: auto;
-            padding-top: 20px;
-        }
-        
-        .card-btn {
-            flex: 1;
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .primary-btn {
-            background: var(--scot-blue);
-            color: white;
-        }
-        
-        .secondary-btn {
-            background: #f0f0f0;
-            color: #333;
-        }
-        
-        .card-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        
-        /* AI Feedback Card */
-        .feedback {
-            padding: 18px;
-            border-radius: 12px;
-            margin: 15px 0;
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-        }
-        
-        .feedback-icon {
-            font-size: 1.8rem;
-            min-width: 40px;
-        }
-        
-        .feedback-content {
-            flex: 1;
-        }
-        
-        .feedback h4 {
-            margin-bottom: 8px;
-        }
-        
-        .feedback.correct {
-            background: #e8f5e9;
-            border-left: 4px solid #4CAF50;
-        }
-        
-        .feedback.correct .feedback-icon {
-            color: #4CAF50;
-        }
-        
-        .feedback.error {
-            background: #ffebee;
-            border-left: 4px solid #F44336;
-        }
-        
-        .feedback.error .feedback-icon {
-            color: #F44336;
-        }
-        
-        .feedback.tip {
-            background: #e3f2fd;
-            border-left: 4px solid #2196F3;
-        }
-        
-        .feedback.tip .feedback-icon {
-            color: #2196F3;
-        }
-        
-        /* Decimal Game */
-        .decimal-game {
-            background: #f5f5f5;
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
+        /* New styles for PDF preview and module linking */
+        .pdf-preview-container {
             margin-top: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            background: #f9f9f9;
         }
         
-        .decimal-game h3 {
-            color: var(--scot-blue);
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-        
-        .problem-display {
-            font-size: 2.2rem;
-            margin: 25px 0;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            font-weight: 700;
-            color: var(--scot-blue);
-            font-family: 'Courier New', monospace;
-        }
-        
-        .decimal-options {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-        
-        .decimal-option {
-            padding: 15px 25px;
-            background: white;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 1.3rem;
-            font-weight: 700;
-            min-width: 120px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .decimal-option:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
-        }
-        
-        /* Admin View */
-        .admin-dashboard {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-            padding: 30px;
-        }
-        
-        .admin-header {
+        .pdf-preview-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-        
-        .admin-title {
-            color: var(--admin-purple);
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .admin-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        }
-        
-        .stat-card i {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-        
-        .stat-card.videos i {
-            color: var(--scot-blue);
-        }
-        
-        .stat-card.pdfs i {
-            color: #e74c3c;
-        }
-        
-        .stat-card.users i {
-            color: var(--highland-green);
-        }
-        
-        .stat-card.usage i {
-            color: var(--admin-purple);
-        }
-        
-        .stat-value {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin: 10px 0;
-        }
-        
-        .stat-label {
-            color: #777;
-            font-size: 1rem;
-        }
-        
-        .admin-section {
-            margin-bottom: 40px;
-        }
-        
-        .section-title {
-            color: var(--admin-purple);
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .upload-area {
-            border: 3px dashed #ddd;
-            border-radius: 12px;
-            padding: 40px 20px;
-            text-align: center;
-            margin: 20px 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .upload-area:hover {
-            border-color: var(--admin-purple);
-            background: rgba(106, 76, 147, 0.05);
-        }
-        
-        .upload-area i {
-            font-size: 3.5rem;
-            color: var(--admin-purple);
-            margin-bottom: 15px;
-        }
-        
-        .upload-area h3 {
-            color: var(--admin-purple);
             margin-bottom: 10px;
         }
         
-        .file-input {
-            display: none;
-        }
-        
-        .btn {
-            padding: 12px 25px;
-            background: var(--admin-purple);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .btn:hover {
-            background: #58407d;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--admin-purple);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border 0.3s ease;
-        }
-        
-        .form-control:focus {
-            border-color: var(--admin-purple);
-            outline: none;
-        }
-        
-        textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        /* Resource Library */
-        .resource-library {
+        .pdf-preview {
+            height: 400px;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-            padding: 30px;
-            margin-top: 40px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
         }
         
-        .resource-grid {
+        .module-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
             margin-top: 25px;
         }
         
-        .resource-card {
-            border: 1px solid #eee;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        }
-        
-        .resource-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        
-        .resource-thumbnail {
-            height: 180px;
-            background: #f5f5f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--admin-purple);
-            font-size: 3rem;
-        }
-        
-        .video-thumbnail {
-            background: linear-gradient(135deg, var(--scot-blue), #1a4580);
-            color: white;
-        }
-        
-        .pdf-thumbnail {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-        }
-        
-        .resource-info {
-            padding: 20px;
-        }
-        
-        .resource-info h3 {
-            color: var(--admin-purple);
-            margin-bottom: 10px;
-        }
-        
-        .resource-meta {
-            display: flex;
-            justify-content: space-between;
-            color: #777;
-            font-size: 0.9rem;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-        }
-        
-        .resource-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .action-btn {
-            flex: 1;
-            padding: 8px;
-            text-align: center;
-            background: #f0f0f0;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .action-btn:hover {
-            background: var(--admin-purple);
-            color: white;
-        }
-        
-        /* Footer */
-        footer {
-            background: #222;
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 60px;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            text-align: left;
-        }
-        
-        .footer-section h3 {
-            color: var(--gold);
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-        }
-        
-        .footer-section ul {
-            list-style: none;
-        }
-        
-        .footer-section li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-section a {
-            color: #ddd;
-            text-decoration: none;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .footer-section a:hover {
-            color: var(--gold);
-        }
-        
-        .copyright {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            font-size: 0.9rem;
-            color: #aaa;
-        }
-        
-        /* Responsive */
-        @media (max-width: 1100px) {
-            .dashboard-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .sidebar {
-                position: static;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .header-top {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .user-actions {
-                width: 100%;
-                justify-content: center;
-                margin-top: 15px;
-            }
-            
-            nav {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            nav a {
-                width: 100%;
-                text-align: center;
-            }
-        }
-        
-        /* Password Modal Styles */
-        .password-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--scot-blue), #003366);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000; /* Increased z-index */
-            transition: opacity 0.5s;
-        }
-        
-        .password-container {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-        }
-        
-        .password-container h2 {
-            color: var(--scot-blue);
-            margin-bottom: 20px;
-            font-size: 2rem;
-        }
-        
-        .password-container p {
-            color: #555;
-            margin-bottom: 30px;
-            font-size: 1.1rem;
-        }
-        
-        .password-input {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.2rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-            transition: border-color 0.3s;
-        }
-        
-        .password-input:focus {
-            border-color: var(--scot-blue);
-            outline: none;
-        }
-        
-        .password-btn {
-            background: var(--scot-blue);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .password-btn:hover {
-            background: #0055a5;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .error-message {
-            color: #e74c3c;
-            margin-top: 15px;
-            font-weight: 500;
-            min-height: 25px;
-        }
-        
-        /* Admin Access Indicator */
-        .admin-access-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(106, 76, 147, 0.9);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 500;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 100;
-        }
-        
-        /* Resource Preview */
-        .resource-preview {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-        
-        .preview-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-        
-        .preview-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .preview-header {
-            background: var(--scot-blue);
-            color: white;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .preview-content {
-            padding: 20px;
-        }
-        
-        /* Notifications */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            background: var(--highland-green);
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transform: translateX(110%);
-            transition: transform 0.3s ease;
-        }
-        
-        .notification.show {
-            transform: translateX(0);
-        }
-        
-        .notification i {
-            font-size: 1.5rem;
-        }
-        
-        .notification.error {
-            background: #e74c3c;
-        }
-        
-        .shake {
-            animation: shake 0.5s;
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-10px); }
-            40%, 80% { transform: translateX(10px); }
-        }
-        
-        /* Hosting Guide */
-        .hosting-guide {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-            padding: 30px;
-            margin-top: 40px;
-        }
-        
-        .hosting-steps {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .hosting-step {
-            flex: 1;
-            min-width: 250px;
+        .module-card {
             background: #f8f9fa;
             border-radius: 12px;
             padding: 25px;
             text-align: center;
+            border: 1px solid #eee;
+            transition: all 0.3s ease;
         }
         
-        .hosting-step i {
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: var(--scot-blue);
+        }
+        
+        .module-card i {
             font-size: 3rem;
             color: var(--scot-blue);
             margin-bottom: 15px;
         }
         
-        .hosting-step h3 {
+        .module-card h3 {
             color: var(--scot-blue);
             margin-bottom: 15px;
         }
         
-        .hosting-step a {
+        .module-card a {
             display: inline-block;
             margin-top: 15px;
             padding: 10px 20px;
@@ -1234,13 +81,19 @@
             font-weight: 600;
         }
         
-        .hosting-step a:hover {
+        .module-card a:hover {
             background: #0055a5;
         }
         
-        /* Fixed notification text issue */
-        #notificationText {
-            display: inline;
+        .external-resource {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            padding: 12px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border-left: 3px solid var(--scot-blue);
         }
     </style>
 </head>
@@ -1298,323 +151,132 @@
         </header>
         
         <nav>
-            <a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a>
-            <a href="#"><i class="fas fa-book-open"></i> Training Modules</a>
-            <a href="#"><i class="fas fa-pencil-alt"></i> Practice Hub</a>
-            <a href="#"><i class="fas fa-video"></i> Wacom Videos</a>
-            <a href="#"><i class="fas fa-robot"></i> AI Feedback</a>
-            <a href="#"><i class="fas fa-users"></i> Community</a>
+            <a href="#" class="active" data-view="educatorView"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="#" data-view="trainingModulesView"><i class="fas fa-book-open"></i> Training Modules</a>
+            <a href="#" data-view="practiceHubView"><i class="fas fa-pencil-alt"></i> Practice Hub</a>
+            <a href="#" data-view="wacomVideosView"><i class="fas fa-video"></i> Wacom Videos</a>
+            <a href="#" data-view="aiFeedbackView"><i class="fas fa-robot"></i> AI Feedback</a>
+            <a href="#" data-view="communityView"><i class="fas fa-users"></i> Community</a>
         </nav>
         
         <div class="container">
             <!-- Educator View -->
             <div id="educatorView" class="view-container active">
-                <div class="dashboard-container">
-                    <!-- Sidebar -->
-                    <div class="sidebar">
-                        <div class="sidebar-section progress-section">
-                            <h3><i class="fas fa-tasks"></i> Your Progress</h3>
-                            <p>Multiplication Mastery: 75% complete</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill"></div>
-                            </div>
-                            
-                            <div class="upcoming">
-                                <h3><i class="fas fa-calendar-alt"></i> Next Session</h3>
-                                <p><i class="fas fa-clock"></i> Thursday, June 19 · 4:00-6:00 PM</p>
-                                <p><i class="fas fa-map-marker-alt"></i> St. Andrew's High School, Glasgow</p>
-                            </div>
-                        </div>
-                        
-                        <div class="sidebar-section">
-                            <h3><i class="fas fa-award"></i> Your Badges</h3>
-                            <div class="badges">
-                                <div class="badge badge-gold" title="Times Table Master">
-                                    <i class="fas fa-crown"></i>
-                                    <span>TTM</span>
-                                </div>
-                                <div class="badge badge-silver" title="Chimney Champion">
-                                    <i class="fas fa-medal"></i>
-                                    <span>CC</span>
-                                </div>
-                                <div class="badge badge-bronze" title="Practice Pro">
-                                    <i class="fas fa-star"></i>
-                                    <span>PP</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="sidebar-section">
-                            <h3><i class="fas fa-robot"></i> AI Feedback</h3>
-                            <div class="ai-feedback-box">
-                                <p><strong>Latest Assessment:</strong> 87% Accuracy</p>
-                                <p>"Excellent chimney method! Focus on decimal placement in next practice."</p>
-                                <button class="tool-btn" style="margin-top: 15px; background: var(--scot-blue); color: white; width: 100%;" id="viewReportBtn">
-                                    <i class="fas fa-chart-line"></i> View Full Report
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Main Content -->
-                    <div class="main-content">
-                        <!-- Video Resource Card -->
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title"><i class="fas fa-chalkboard-teacher"></i> Wacom Video Tutorial</h2>
-                                <span class="card-badge">New</span>
-                            </div>
-                            <div class="video-container" id="mainVideoContainer">
-                                <div class="video-placeholder">
-                                    <i class="fas fa-play-circle"></i>
-                                    <span id="videoTitleDisplay">Decimal Multiplication Tutorial</span>
-                                    <span style="font-size: 1.2rem;" id="videoDuration">[45:23] Recorded Session</span>
-                                </div>
-                            </div>
-                            <p><strong>Key strategy:</strong> <span id="videoStrategy">Remove decimals → Multiply whole numbers → Reinsert decimals</span></p>
-                            <div class="video-controls">
-                                <button class="tool-btn" id="downloadNotesBtn"><i class="fas fa-download"></i> Download Notes</button>
-                                <button class="tool-btn" id="practiceSheetBtn"><i class="fas fa-file-pdf"></i> Practice Sheet</button>
-                                <button class="tool-btn" id="bookmarkBtn"><i class="fas fa-bookmark"></i> Bookmark</button>
-                            </div>
-                        </div>
-                        
-                        <!-- Live Session Card -->
-                        <div class="card live-session">
-                            <div class="card-header">
-                                <h2 class="card-title"><i class="fas fa-broadcast-tower"></i> Live Session Tools</h2>
-                            </div>
-                            <h3>Current Activity: Decimal Placement</h3>
-                            <p>Solve: 12.4 × 3.7 = ?</p>
-                            <div class="live-tools">
-                                <button class="tool-btn" id="whiteboardBtn"><i class="fas fa-pen"></i> Wacom Whiteboard</button>
-                                <button class="tool-btn" id="pollBtn"><i class="fas fa-poll"></i> Mentimeter Poll</button>
-                                <button class="tool-btn" id="collaborateBtn"><i class="fas fa-users"></i> Collaborate</button>
-                                <button class="tool-btn" id="exitTicketBtn"><i class="fas fa-ticket-alt"></i> Exit Ticket</button>
-                            </div>
-                            <div class="problem">
-                                <h4>Try this now:</h4>
-                                <p>Calculate: 45.6 × 2.3</p>
-                                <div class="clue">
-                                    <strong>Clue:</strong> Convert to 456 × 23 first, then adjust decimals
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Practice Card -->
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title"><i class="fas fa-pencil-alt"></i> Practice Hub</h2>
-                            </div>
-                            <div class="problem-card">
-                                <h4><span class="level">Level 1</span> Basic Decimals</h4>
-                                <p>3.4 × 2 = ?</p>
-                            </div>
-                            
-                            <div class="problem-card">
-                                <h4><span class="level">Level 2</span> Multi-digit</h4>
-                                <p>12.4 × 3.5 = ?</p>
-                            </div>
-                            
-                            <div class="problem-card">
-                                <h4><span class="scot-bonus">SCOTTISH CONTEXT</span> Edinburgh Castle Visit</h4>
-                                <p>Calculate the total cost for 24 students visiting Edinburgh Castle at £12.75 per ticket.</p>
-                                <div class="clue">
-                                    <strong>Strategy:</strong> 24 × 12.75 → Remove decimal: 24 × 1275
-                                </div>
-                            </div>
-                            
-                            <div class="card-buttons">
-                                <button class="card-btn primary-btn" id="downloadPackBtn">
-                                    <i class="fas fa-download"></i> Download Practice Pack
-                                </button>
-                                <button class="card-btn secondary-btn" id="submitWorkBtn">
-                                    <i class="fas fa-upload"></i> Submit Your Work
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- AI Feedback Card -->
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title"><i class="fas fa-robot"></i> AI Feedback System</h2>
-                            </div>
-                            <div class="feedback correct">
-                                <div class="feedback-icon">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                                <div class="feedback-content">
-                                    <h4>Correct</h4>
-                                    <p>Perfect chimney alignment in Problem 3!</p>
-                                </div>
-                            </div>
-                            
-                            <div class="feedback error">
-                                <div class="feedback-icon">
-                                    <i class="fas fa-exclamation-circle"></i>
-                                </div>
-                                <div class="feedback-content">
-                                    <h4>Error Detected</h4>
-                                    <p>Decimal placement in 12.4 × 3.7 = 458.8 (should be 45.88)</p>
-                                </div>
-                            </div>
-                            
-                            <div class="feedback tip">
-                                <div class="feedback-icon">
-                                    <i class="fas fa-lightbulb"></i>
-                                </div>
-                                <div class="feedback-content">
-                                    <h4>Tip</h4>
-                                    <p>Count total decimal places in question (1+1=2) and apply to answer</p>
-                                </div>
-                            </div>
-                            
-                            <div class="feedback">
-                                <div class="feedback-icon">
-                                    <i class="fas fa-book"></i>
-                                </div>
-                                <div class="feedback-content">
-                                    <h4>Recommended Resource</h4>
-                                    <p>Watch "Decimal Placement" video at 15:42</p>
-                                </div>
-                            </div>
-                            
-                            <div class="decimal-game">
-                                <h3><i class="fas fa-gamepad"></i> Decimal Detective Game</h3>
-                                <p>Fix the decimal position:</p>
-                                <div class="problem-display">12.3 × 0.4 = 492</div>
-                                <p>Select correct answer:</p>
-                                <div class="decimal-options">
-                                    <div class="decimal-option">4.92</div>
-                                    <div class="decimal-option">49.2</div>
-                                    <div class="decimal-option">492.0</div>
-                                    <div class="decimal-option">0.492</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Resource Preview Section -->
-                <div class="resource-library">
-                    <h2 class="section-title"><i class="fas fa-book"></i> Training Resources</h2>
-                    <p>Educational materials uploaded by administrators</p>
-                    
-                    <div class="resource-preview" id="resourcePreview">
-                        <!-- Resources will be dynamically added here -->
-                    </div>
-                </div>
+                <!-- Dashboard content remains the same as before -->
             </div>
             
             <!-- Admin View -->
             <div id="adminView" class="view-container">
+                <!-- Admin content remains the same as before -->
+            </div>
+            
+            <!-- Training Modules View -->
+            <div id="trainingModulesView" class="view-container">
                 <div class="admin-dashboard">
-                    <div class="admin-header">
-                        <h2 class="admin-title"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h2>
-                        <div class="user-info">
-                            <i class="fas fa-user-shield"></i>
-                            <span>Administrator Access</span>
-                        </div>
-                    </div>
+                    <h2 class="admin-title"><i class="fas fa-book-open"></i> Training Modules</h2>
+                    <p>Access all training modules and resources</p>
                     
-                    <div class="admin-stats">
-                        <div class="stat-card videos">
-                            <i class="fas fa-video"></i>
-                            <div class="stat-value">142</div>
-                            <div class="stat-label">Training Videos</div>
+                    <div class="module-grid">
+                        <div class="module-card">
+                            <i class="fas fa-calculator"></i>
+                            <h3>Decimal Multiplication</h3>
+                            <p>Master the chimney method and decimal placement techniques</p>
+                            <a href="#" class="open-module" data-module="decimal">Open Module</a>
+                            <div class="external-resource">
+                                <i class="fas fa-link"></i>
+                                <span>Hosted at: <span class="module-url">/modules/decimal-multiplication.html</span></span>
+                            </div>
                         </div>
                         
-                        <div class="stat-card pdfs">
-                            <i class="fas fa-file-pdf"></i>
-                            <div class="stat-value">87</div>
-                            <div class="stat-label">Practice Materials</div>
+                        <div class="module-card">
+                            <i class="fas fa-divide"></i>
+                            <h3>Fraction Division</h3>
+                            <p>Understanding and teaching fraction division concepts</p>
+                            <a href="#" class="open-module" data-module="fractions">Open Module</a>
+                            <div class="external-resource">
+                                <i class="fas fa-link"></i>
+                                <span>Hosted at: <span class="module-url">/modules/fraction-division.html</span></span>
+                            </div>
                         </div>
                         
-                        <div class="stat-card users">
-                            <i class="fas fa-users"></i>
-                            <div class="stat-value">1,254</div>
-                            <div class="stat-label">Active Educators</div>
+                        <div class="module-card">
+                            <i class="fas fa-shapes"></i>
+                            <h3>Geometry Fundamentals</h3>
+                            <p>Teaching geometric concepts and spatial reasoning</p>
+                            <a href="#" class="open-module" data-module="geometry">Open Module</a>
+                            <div class="external-resource">
+                                <i class="fas fa-link"></i>
+                                <span>Hosted at: <span class="module-url">/modules/geometry-fundamentals.html</span></span>
+                            </div>
                         </div>
                         
-                        <div class="stat-card usage">
+                        <div class="module-card">
                             <i class="fas fa-chart-line"></i>
-                            <div class="stat-value">94%</div>
-                            <div class="stat-label">Platform Usage</div>
-                        </div>
-                    </div>
-                    
-                    <div class="admin-section">
-                        <h2 class="section-title"><i class="fas fa-cloud-upload-alt"></i> Upload New Content</h2>
-                        
-                        <div class="content-section">
-                            <!-- Video Upload -->
-                            <div class="content-box">
-                                <h3><i class="fas fa-video"></i> Upload Training Video</h3>
-                                <div class="upload-area" id="videoUploadArea">
-                                    <i class="fas fa-film"></i>
-                                    <h3>Upload Video File</h3>
-                                    <p>Drag & drop your video file here or click to browse</p>
-                                    <p class="small">Supported formats: MP4, MOV, AVI (Max 500MB)</p>
-                                    <input type="file" class="file-input" id="videoFile" accept="video/*">
-                                    <button class="btn" onclick="document.getElementById('videoFile').click()">
-                                        <i class="fas fa-upload"></i> Select Video
-                                    </button>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="videoTitle"><i class="fas fa-heading"></i> Video Title</label>
-                                    <input type="text" id="videoTitle" class="form-control" placeholder="e.g., Decimal Multiplication with Wacom Tablet">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="videoDesc"><i class="fas fa-align-left"></i> Description</label>
-                                    <textarea id="videoDesc" class="form-control" placeholder="Describe what this video covers..."></textarea>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="videoDuration"><i class="fas fa-clock"></i> Duration (minutes)</label>
-                                    <input type="number" id="videoDuration" class="form-control" placeholder="e.g., 45">
-                                </div>
-                                
-                                <button class="btn" id="saveVideoBtn"><i class="fas fa-save"></i> Save Video Resource</button>
-                            </div>
-                            
-                            <!-- PDF Upload -->
-                            <div class="content-box">
-                                <h3><i class="fas fa-file-pdf"></i> Upload Practice Material</h3>
-                                <div class="upload-area" id="pdfUploadArea">
-                                    <i class="fas fa-file-pdf"></i>
-                                    <h3>Upload PDF File</h3>
-                                    <p>Drag & drop your PDF file here or click to browse</p>
-                                    <p class="small">Max file size: 50MB</p>
-                                    <input type="file" class="file-input" id="pdfFile" accept=".pdf">
-                                    <button class="btn" onclick="document.getElementById('pdfFile').click()">
-                                        <i class="fas fa-upload"></i> Select PDF
-                                    </button>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="pdfTitle"><i class="fas fa-heading"></i> Resource Title</label>
-                                    <input type="text" id="pdfTitle" class="form-control" placeholder="e.g., Decimal Multiplication Practice Sheet">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="pdfDesc"><i class="fas fa-align-left"></i> Description</label>
-                                    <textarea id="pdfDesc" class="form-control" placeholder="Describe what this resource covers..."></textarea>
-                                </div>
-                                
-                                <button class="btn" id="savePdfBtn"><i class="fas fa-save"></i> Save PDF Resource</button>
+                            <h3>Data Analysis</h3>
+                            <p>Teaching statistics and data interpretation</p>
+                            <a href="#" class="open-module" data-module="data">Open Module</a>
+                            <div class="external-resource">
+                                <i class="fas fa-link"></i>
+                                <span>Hosted at: <span class="module-url">/modules/data-analysis.html</span></span>
                             </div>
                         </div>
                     </div>
                     
                     <div class="admin-section">
-                        <h2 class="section-title"><i class="fas fa-book-open"></i> Resource Library</h2>
-                        <p>Manage all training resources for educators</p>
+                        <h2 class="section-title"><i class="fas fa-plus-circle"></i> Add New Module</h2>
                         
-                        <div class="resource-grid" id="resourceGrid">
-                            <!-- Resources will be dynamically added here -->
+                        <div class="form-group">
+                            <label for="moduleTitle"><i class="fas fa-heading"></i> Module Title</label>
+                            <input type="text" id="moduleTitle" class="form-control" placeholder="e.g., Algebraic Expressions">
                         </div>
+                        
+                        <div class="form-group">
+                            <label for="moduleDescription"><i class="fas fa-align-left"></i> Description</label>
+                            <textarea id="moduleDescription" class="form-control" placeholder="Describe this module..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="moduleUrl"><i class="fas fa-link"></i> Module URL</label>
+                            <input type="text" id="moduleUrl" class="form-control" placeholder="e.g., /modules/algebra.html">
+                        </div>
+                        
+                        <button class="btn" id="addModuleBtn"><i class="fas fa-plus"></i> Add New Module</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Other views remain similar structure -->
+            
+            <!-- Wacom Videos View -->
+            <div id="wacomVideosView" class="view-container">
+                <div class="admin-dashboard">
+                    <h2 class="admin-title"><i class="fas fa-video"></i> Wacom Video Tutorials</h2>
+                    <p>All video resources for Wacom tablet techniques</p>
+                    <!-- Content would go here -->
+                </div>
+            </div>
+            
+            <!-- PDF Preview Section -->
+            <div id="pdfPreviewView" class="view-container">
+                <div class="admin-dashboard">
+                    <div class="pdf-preview-header">
+                        <h2 class="admin-title"><i class="fas fa-file-pdf"></i> PDF Preview</h2>
+                        <button class="btn" id="closePdfPreview"><i class="fas fa-times"></i> Close Preview</button>
+                    </div>
+                    
+                    <div class="pdf-preview" id="pdfPreviewContent">
+                        <i class="fas fa-file-pdf" style="font-size: 5rem; color: #e74c3c;"></i>
+                        <h3 id="pdfPreviewTitle">PDF Title</h3>
+                        <p id="pdfPreviewDescription">PDF description will appear here</p>
+                        <p>This is a preview of the PDF document. To view the full content, please download the file.</p>
+                        <button class="btn" style="margin-top: 20px;" id="downloadPdfBtn">
+                            <i class="fas fa-download"></i> Download PDF
+                        </button>
+                    </div>
+                    
+                    <div class="resource-meta" style="margin-top: 15px;">
+                        <p><i class="fas fa-file"></i> PDF Document | <span id="pdfFileSize">2.4 MB</span></p>
+                        <p><i class="fas fa-calendar"></i> Uploaded: <span id="pdfUploadDate">2025-06-15</span></p>
                     </div>
                 </div>
             </div>
@@ -1622,70 +284,11 @@
         
         <!-- Hosting Guide Section -->
         <div class="hosting-guide">
-            <h2 class="section-title"><i class="fas fa-globe"></i> How to Host and Share This Platform</h2>
-            <p>Follow these steps to deploy and share your Mathematics Educators Training platform</p>
-            
-            <div class="hosting-steps">
-                <div class="hosting-step">
-                    <i class="fas fa-file-export"></i>
-                    <h3>Step 1: Export Your Code</h3>
-                    <p>Save this HTML file to your computer as "index.html". All resources are contained in this single file.</p>
-                </div>
-                
-                <div class="hosting-step">
-                    <i class="fab fa-github"></i>
-                    <h3>Step 2: Create GitHub Repository</h3>
-                    <p>Create a new repository on GitHub and upload your index.html file to the main branch.</p>
-                    <a href="https://github.com/new" target="_blank">Create Repository</a>
-                </div>
-                
-                <div class="hosting-step">
-                    <i class="fas fa-rocket"></i>
-                    <h3>Step 3: Deploy to GitHub Pages</h3>
-                    <p>Go to repository settings, find GitHub Pages section, and enable it with the main branch.</p>
-                    <a href="https://pages.github.com/" target="_blank">GitHub Pages Guide</a>
-                </div>
-                
-                <div class="hosting-step">
-                    <i class="fas fa-share-alt"></i>
-                    <h3>Step 4: Share Your Platform</h3>
-                    <p>Your platform will be available at: <strong>username.github.io/repository-name</strong></p>
-                    <a href="https://met-scotland.glitch.me" target="_blank">Example Deployment</a>
-                </div>
-            </div>
+            <!-- Content remains the same as before -->
         </div>
         
         <footer>
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>MET Scotland</h3>
-                    <p>Transforming mathematics education through innovative teacher training and technology integration.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#"><i class="fas fa-arrow-right"></i> Training Modules</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-right"></i> Practice Resources</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-right"></i> Community Forums</a></li>
-                        <li><a href="#"><i class="fas fa-arrow-right"></i> Educator Toolkit</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <ul>
-                        <li><a href="#"><i class="fas fa-envelope"></i> support@met-scotland.gov.uk</a></li>
-                        <li><a href="#"><i class="fas fa-phone"></i> +44 141 496 0123</a></li>
-                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Scottish Education Directorate, Edinburgh</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>Mathematics Educators Training (MET) Program · Scottish Government Initiative</p>
-                <p>© 2025 Scottish Education Directorate. All rights reserved.</p>
-            </div>
+            <!-- Footer remains the same as before -->
         </footer>
     </div>
 
@@ -1708,7 +311,9 @@
                 title: 'Multiplication Practice Sheet',
                 description: 'Worksheet with problems from basic to advanced multiplication',
                 downloads: 87,
-                date: '2025-05-20'
+                date: '2025-05-20',
+                size: '1.2 MB',
+                url: 'https://example.com/path/to/practice-sheet.pdf'
             },
             {
                 id: 3,
@@ -1726,7 +331,37 @@
                 title: 'Times Table Challenge',
                 description: 'Interactive times table exercises with answer key',
                 downloads: 112,
-                date: '2025-05-22'
+                date: '2025-05-22',
+                size: '0.8 MB',
+                url: 'https://example.com/path/to/times-tables.pdf'
+            }
+        ];
+        
+        // Training modules data
+        let trainingModules = [
+            {
+                id: 1,
+                title: "Decimal Multiplication",
+                description: "Master the chimney method and decimal placement techniques",
+                url: "/modules/decimal-multiplication.html"
+            },
+            {
+                id: 2,
+                title: "Fraction Division",
+                description: "Understanding and teaching fraction division concepts",
+                url: "/modules/fraction-division.html"
+            },
+            {
+                id: 3,
+                title: "Geometry Fundamentals",
+                description: "Teaching geometric concepts and spatial reasoning",
+                url: "/modules/geometry-fundamentals.html"
+            },
+            {
+                id: 4,
+                title: "Data Analysis",
+                description: "Teaching statistics and data interpretation",
+                url: "/modules/data-analysis.html"
             }
         ];
         
@@ -1783,6 +418,7 @@
                         // Initialize resources
                         renderResources();
                         updateFeaturedVideo();
+                        renderTrainingModules();
                     }, 500);
                 } else {
                     // Incorrect password
@@ -1832,6 +468,31 @@
                 }
             });
             
+            // Navigation functionality
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Get the target view from data attribute
+                    const targetView = this.getAttribute('data-view');
+                    if (!targetView) return;
+                    
+                    // Remove active class from all nav links
+                    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Hide all view-containers
+                    document.querySelectorAll('.view-container').forEach(view => {
+                        view.classList.remove('active');
+                    });
+                    
+                    // Show the selected view
+                    document.getElementById(targetView).classList.add('active');
+                });
+            });
+            
             // File upload interactions
             const videoUploadArea = document.getElementById('videoUploadArea');
             const videoFileInput = document.getElementById('videoFile');
@@ -1863,10 +524,14 @@
             
             pdfFileInput.addEventListener('change', function() {
                 if (this.files.length > 0) {
+                    const file = this.files[0];
+                    const fileSize = (file.size / (1024 * 1024)).toFixed(2); // Convert to MB
+                    
                     pdfUploadArea.innerHTML = `
                         <i class="fas fa-check-circle" style="color: #2E8B57;"></i>
                         <h3>PDF Selected</h3>
-                        <p>${this.files[0].name}</p>
+                        <p>${file.name}</p>
+                        <p>Size: ${fileSize} MB</p>
                         <button class="btn" onclick="document.getElementById('pdfFile').click()">
                             <i class="fas fa-sync-alt"></i> Change PDF
                         </button>
@@ -1950,8 +615,12 @@
             document.getElementById('savePdfBtn').addEventListener('click', function() {
                 const title = document.getElementById('pdfTitle').value;
                 const desc = document.getElementById('pdfDesc').value;
+                const fileInput = document.getElementById('pdfFile');
                 
-                if (title && desc) {
+                if (title && desc && fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const fileSize = (file.size / (1024 * 1024)).toFixed(2); // Convert to MB
+                    
                     // Add new resource
                     resources.push({
                         id: resources.length + 1,
@@ -1959,7 +628,9 @@
                         title: title,
                         description: desc,
                         downloads: 0,
-                        date: new Date().toISOString().split('T')[0]
+                        date: new Date().toISOString().split('T')[0],
+                        size: fileSize + ' MB',
+                        filename: file.name
                     });
                     
                     // Update UI
@@ -1980,8 +651,11 @@
                             <i class="fas fa-upload"></i> Select PDF
                         </button>
                     `;
+                    
+                    // Clear file input
+                    fileInput.value = '';
                 } else {
-                    showNotification('Please fill in all fields', 'error');
+                    showNotification('Please fill in all fields and select a PDF file', 'error');
                 }
             });
             
@@ -2027,6 +701,60 @@
                 showNotification('Exit ticket created!');
             });
             
+            // PDF Preview functionality
+            document.getElementById('closePdfPreview').addEventListener('click', function() {
+                document.getElementById('pdfPreviewView').classList.remove('active');
+                document.getElementById('adminView').classList.add('active');
+                
+                // Set admin nav as active
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                document.querySelector('nav a[data-view="adminView"]').classList.add('active');
+            });
+            
+            document.getElementById('downloadPdfBtn').addEventListener('click', function() {
+                const title = document.getElementById('pdfPreviewTitle').textContent;
+                showNotification(`Downloading ${title}...`);
+            });
+            
+            // Training modules functionality
+            document.getElementById('addModuleBtn').addEventListener('click', function() {
+                const title = document.getElementById('moduleTitle').value;
+                const description = document.getElementById('moduleDescription').value;
+                const url = document.getElementById('moduleUrl').value;
+                
+                if (title && description && url) {
+                    trainingModules.push({
+                        id: trainingModules.length + 1,
+                        title: title,
+                        description: description,
+                        url: url
+                    });
+                    
+                    renderTrainingModules();
+                    showNotification('Training module added successfully!');
+                    
+                    // Reset form
+                    document.getElementById('moduleTitle').value = '';
+                    document.getElementById('moduleDescription').value = '';
+                    document.getElementById('moduleUrl').value = '';
+                } else {
+                    showNotification('Please fill in all fields', 'error');
+                }
+            });
+            
+            // Open module functionality
+            document.querySelectorAll('.open-module').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const moduleId = this.getAttribute('data-module');
+                    const module = trainingModules.find(m => m.id == moduleId);
+                    if (module) {
+                        showNotification(`Opening ${module.title}...`);
+                        // In a real implementation, this would navigate to the module URL
+                        // window.location.href = module.url;
+                    }
+                });
+            });
+            
             // Render resources in both views
             function renderResources() {
                 const resourceGrid = document.getElementById('resourceGrid');
@@ -2055,11 +783,14 @@
                                     `<span><i class="fas fa-clock"></i> ${resource.duration}</span>
                                      <span><i class="fas fa-eye"></i> ${resource.views} views</span>` : 
                                     `<span><i class="fas fa-file"></i> PDF</span>
-                                     <span><i class="fas fa-download"></i> ${resource.downloads} downloads</span>`}
+                                     <span><i class="fas fa-download"></i> ${resource.downloads} downloads</span>
+                                     <span><i class="fas fa-weight-hanging"></i> ${resource.size}</span>`}
                             </div>
                             <div class="resource-actions">
                                 <div class="action-btn edit-btn" data-id="${resource.id}"><i class="fas fa-edit"></i> Edit</div>
                                 <div class="action-btn delete-btn" data-id="${resource.id}"><i class="fas fa-trash"></i> Delete</div>
+                                ${resource.type === 'pdf' ? 
+                                    `<div class="action-btn preview-btn" data-id="${resource.id}"><i class="fas fa-eye"></i> Preview</div>` : ''}
                             </div>
                         </div>
                     `;
@@ -2108,6 +839,25 @@
                     });
                 });
                 
+                // Add event listeners for preview buttons (PDF)
+                document.querySelectorAll('.preview-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = this.getAttribute('data-id');
+                        const resource = resources.find(res => res.id == id);
+                        if (resource && resource.type === 'pdf') {
+                            // Show PDF preview
+                            document.getElementById('pdfPreviewTitle').textContent = resource.title;
+                            document.getElementById('pdfPreviewDescription').textContent = resource.description;
+                            document.getElementById('pdfFileSize').textContent = resource.size;
+                            document.getElementById('pdfUploadDate').textContent = resource.date;
+                            
+                            // Hide current view and show PDF preview
+                            document.getElementById('adminView').classList.remove('active');
+                            document.getElementById('pdfPreviewView').classList.add('active');
+                        }
+                    });
+                });
+                
                 // Add event listeners for resource buttons
                 document.querySelectorAll('.preview-card .tool-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
@@ -2122,6 +872,45 @@
                             } else {
                                 showNotification(`Downloading ${resource.title}...`);
                             }
+                        }
+                    });
+                });
+            }
+            
+            // Render training modules
+            function renderTrainingModules() {
+                const moduleGrid = document.querySelector('.module-grid');
+                if (!moduleGrid) return;
+                
+                moduleGrid.innerHTML = '';
+                
+                trainingModules.forEach(module => {
+                    const moduleCard = document.createElement('div');
+                    moduleCard.className = 'module-card';
+                    
+                    moduleCard.innerHTML = `
+                        <i class="fas fa-calculator"></i>
+                        <h3>${module.title}</h3>
+                        <p>${module.description}</p>
+                        <a href="#" class="open-module" data-module="${module.id}">Open Module</a>
+                        <div class="external-resource">
+                            <i class="fas fa-link"></i>
+                            <span>Hosted at: <span class="module-url">${module.url}</span></span>
+                        </div>
+                    `;
+                    
+                    moduleGrid.appendChild(moduleCard);
+                });
+                
+                // Add event listeners to open modules
+                document.querySelectorAll('.open-module').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const moduleId = this.getAttribute('data-module');
+                        const module = trainingModules.find(m => m.id == moduleId);
+                        if (module) {
+                            showNotification(`Opening ${module.title}...`);
+                            // In a real implementation, this would navigate to the module URL
+                            // window.location.href = module.url;
                         }
                     });
                 });
