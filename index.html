@@ -2509,3 +2509,287 @@
     </script>
 </body>
 </html>
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MET Scotland - Mathematics Educators Training</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ... (existing CSS remains unchanged) ... */
+        
+        /* New styles for video player */
+        .video-player {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-info-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- ... (password modal remains unchanged) ... -->
+    
+    <div id="appContent" style="display: none;">
+        <!-- ... (header and nav remain unchanged) ... -->
+        
+        <div class="container">
+            <!-- Educator View -->
+            <div id="educatorView" class="view-container active">
+                <div class="dashboard-container">
+                    <!-- ... (sidebar remains unchanged) ... -->
+                    
+                    <!-- Main Content -->
+                    <div class="main-content">
+                        <!-- Video Resource Card -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title"><i class="fas fa-chalkboard-teacher"></i> Wacom Video Tutorial</h2>
+                                <span class="card-badge">New</span>
+                            </div>
+                            <div class="video-container" id="mainVideoContainer">
+                                <!-- Video will be dynamically inserted here -->
+                            </div>
+                            <p><strong>Key strategy:</strong> <span id="videoStrategy">Remove decimals → Multiply whole numbers → Reinsert decimals</span></p>
+                            <div class="video-controls">
+                                <button class="tool-btn" id="downloadNotesBtn"><i class="fas fa-download"></i> Download Notes</button>
+                                <button class="tool-btn" id="practiceSheetBtn"><i class="fas fa-file-pdf"></i> Practice Sheet</button>
+                                <button class="tool-btn" id="bookmarkBtn"><i class="fas fa-bookmark"></i> Bookmark</button>
+                            </div>
+                        </div>
+                        
+                        <!-- ... (other cards remain unchanged) ... -->
+                    </div>
+                </div>
+                
+                <!-- ... (resource preview section remains unchanged) ... -->
+            </div>
+            
+            <!-- Admin View -->
+            <div id="adminView" class="view-container">
+                <div class="admin-dashboard">
+                    <!-- ... (admin header and stats remain unchanged) ... -->
+                    
+                    <div class="admin-section">
+                        <h2 class="section-title"><i class="fas fa-cloud-upload-alt"></i> Upload New Content</h2>
+                        
+                        <div class="content-section">
+                            <!-- Video Upload -->
+                            <div class="content-box">
+                                <h3><i class="fas fa-video"></i> Wacom Video Tutorial</h3> <!-- Changed title -->
+                                <div class="upload-area" id="videoUploadArea">
+                                    <i class="fas fa-film"></i>
+                                    <h3>Upload Video File</h3>
+                                    <p>Drag & drop your video file here or click to browse</p>
+                                    <p class="upload-info">Supported formats: MP4, MOV, AVI (Max 500MB)</p>
+                                    <input type="file" class="file-input" id="videoFile" accept="video/*">
+                                    <button class="btn" onclick="document.getElementById('videoFile').click()">
+                                        <i class="fas fa-upload"></i> Select Video
+                                    </button>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="videoTitle"><i class="fas fa-heading"></i> Video Title</label>
+                                    <input type="text" id="videoTitle" class="form-control" placeholder="e.g., Decimal Multiplication with Wacom Tablet">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="videoDesc"><i class="fas fa-align-left"></i> Description</label>
+                                    <textarea id="videoDesc" class="form-control" placeholder="Describe what this video covers..."></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="videoDuration"><i class="fas fa-clock"></i> Duration (minutes)</label>
+                                    <input type="number" id="videoDurationAdmin" class="form-control" placeholder="e.g., 45">
+                                </div>
+                                
+                                <button class="btn" id="saveVideoBtn"><i class="fas fa-save"></i> Save Video Resource</button>
+                            </div>
+                            
+                            <!-- ... (PDF upload remains unchanged) ... -->
+                        </div>
+                    </div>
+                    
+                    <!-- ... (resource library remains unchanged) ... -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- ... (footer and other sections remain unchanged) ... -->
+    </div>
+
+    <script>
+        // Resource data storage
+        let resources = [
+            {
+                id: 1,
+                type: 'video',
+                title: 'Decimal Multiplication',
+                description: 'Step-by-step guide to multiplying decimals using the chimney method',
+                duration: '25 min',
+                views: 142,
+                date: '2025-05-15',
+                strategy: 'Remove decimals → Multiply whole numbers → Reinsert decimals',
+                url: 'https://raw.githubusercontent.com/scottish-education/math-resources/main/Wacom_1.mov'
+            },
+            // ... (other resources) ...
+        ];
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... (password and toggle functionality remains unchanged) ...
+            
+            // Store selected video file and URL
+            let selectedVideoFile = null;
+            let videoObjectUrl = null;
+            
+            // File upload interactions
+            const videoUploadArea = document.getElementById('videoUploadArea');
+            const videoFileInput = document.getElementById('videoFile');
+            
+            videoUploadArea.addEventListener('click', () => {
+                videoFileInput.click();
+            });
+            
+            videoFileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    selectedVideoFile = this.files[0];
+                    
+                    // Create object URL for preview
+                    if (videoObjectUrl) {
+                        URL.revokeObjectURL(videoObjectUrl);
+                    }
+                    videoObjectUrl = URL.createObjectURL(selectedVideoFile);
+                    
+                    videoUploadArea.innerHTML = `
+                        <video controls style="width:100%; height:200px; border-radius:8px; background:#000;">
+                            <source src="${videoObjectUrl}" type="${selectedVideoFile.type}">
+                        </video>
+                        <p>${selectedVideoFile.name}</p>
+                        <button class="btn" onclick="document.getElementById('videoFile').click()">
+                            <i class="fas fa-sync-alt"></i> Change Video
+                        </button>
+                    `;
+                }
+            });
+            
+            // Resource saving
+            document.getElementById('saveVideoBtn').addEventListener('click', function() {
+                const title = document.getElementById('videoTitle').value;
+                const desc = document.getElementById('videoDesc').value;
+                const duration = document.getElementById('videoDurationAdmin').value;
+                
+                if (title && desc && duration && selectedVideoFile) {
+                    // Add new resource
+                    const newVideo = {
+                        id: resources.length + 1,
+                        type: 'video',
+                        title: title,
+                        description: desc,
+                        duration: duration + " min",
+                        views: 0,
+                        date: new Date().toISOString().split('T')[0],
+                        strategy: desc.split('.')[0] || "Key strategy not provided",
+                        url: videoObjectUrl,
+                        file: selectedVideoFile
+                    };
+                    
+                    resources.push(newVideo);
+                    
+                    // Update UI
+                    renderResources();
+                    updateFeaturedVideo();
+                    
+                    // Show notification
+                    showNotification('Wacom video tutorial saved successfully!');
+                    
+                    // Reset form
+                    document.getElementById('videoTitle').value = '';
+                    document.getElementById('videoDesc').value = '';
+                    document.getElementById('videoDurationAdmin').value = '';
+                    selectedVideoFile = null;
+                    videoObjectUrl = null;
+                    
+                    videoUploadArea.innerHTML = `
+                        <i class="fas fa-film"></i>
+                        <h3>Upload Video File</h3>
+                        <p>Drag & drop your video file here or click to browse</p>
+                        <p class="upload-info">Supported formats: MP4, MOV, AVI (Max 500MB)</p>
+                        <button class="btn" onclick="document.getElementById('videoFile').click()">
+                            <i class="fas fa-upload"></i> Select Video
+                        </button>
+                    `;
+                } else {
+                    showNotification('Please fill in all fields and select a video', 'error');
+                }
+            });
+            
+            // ... (other event listeners remain unchanged) ...
+            
+            // Render resources in both views
+            function renderResources() {
+                // ... (existing resourceGrid and resourcePreview code) ...
+            }
+            
+            // Update featured video in educator view
+            function updateFeaturedVideo() {
+                const videos = resources.filter(r => r.type === 'video');
+                const mainVideoContainer = document.getElementById('mainVideoContainer');
+                
+                if (videos.length > 0) {
+                    const latestVideo = videos[videos.length - 1];
+                    
+                    // Update video strategy text
+                    document.getElementById('videoStrategy').textContent = latestVideo.strategy;
+                    
+                    // Create video player
+                    mainVideoContainer.innerHTML = `
+                        <video controls class="video-player">
+                            <source src="${latestVideo.url}" type="${latestVideo.file?.type || 'video/mp4'}">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-info-overlay">
+                            ${latestVideo.title} - ${latestVideo.duration}
+                        </div>
+                    `;
+                } else {
+                    // Show placeholder if no videos
+                    mainVideoContainer.innerHTML = `
+                        <div class="video-placeholder">
+                            <i class="fas fa-play-circle"></i>
+                            <span>No Wacom tutorials available</span>
+                            <span style="font-size: 1.2rem;">Upload videos in Admin view</span>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Initialize resources on load
+            renderResources();
+            updateFeaturedVideo();
+            
+            // ... (other functions remain unchanged) ...
+        });
+        
+        // Show notification
+        function showNotification(message, type = 'success') {
+            // ... (existing notification code) ...
+        }
+    </script>
+</body>
+</html>
