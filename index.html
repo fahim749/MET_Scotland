@@ -2416,38 +2416,40 @@
                 
                 // Simulate API call delay
                 setTimeout(() => {
-                    // Sample GitHub resources
+                   // Updated GitHub resources: 2 PDFs, 1 DOCX, 1 MP4
                     const githubResources = [
-                        {
-                            name: 'Multiplication Guide',
-                            description: 'A comprehensive guide to multiplication techniques',
-                            type: 'pdf',
-                            size: '1.2 MB',
-                            url: `https://raw.githubusercontent.com/${username}/${repoName}/main/multiplication-guide.pdf`
-                        },
-                        {
-                            name: 'Decimal Exercises',
-                            description: 'Practice problems with solutions for decimal multiplication',
-                            type: 'docx',
-                            size: '0.8 MB',
-                            url: `https://raw.githubusercontent.com/${username}/${repoName}/main/decimal-exercises.docx`
-                        },
-                        {
-                            name: 'Lesson Plan Template',
-                            description: 'Editable template for math lesson planning',
-                            type: 'docx',
-                            size: '0.5 MB',
-                            url: `https://raw.githubusercontent.com/${username}/${repoName}/main/lesson-plan-template.docx`
-                        },
-                        {
-                            name: 'Scottish Curriculum Alignment',
-                            description: 'How MET aligns with the Scottish curriculum',
-                            type: 'pdf',
-                            size: '2.1 MB',
-                            url: `https://raw.githubusercontent.com/${username}/${repoName}/main/scottish-curriculum-alignment.pdf`
-                        }
-                    ];
-                    
+
+                         {
+                name: 'Multiplication Mastery Guide',
+                description: 'Complete guide to multiplication techniques for Scottish educators',
+                type: 'pdf',
+                size: '2.1 MB',
+                url: `https://raw.githubusercontent.com/${username}/${repoName}/main/multiplication-guide.pdf`
+            },
+            {
+                name: 'Decimal Practice Problems',
+                description: 'Worksheet with challenging decimal multiplication exercises',
+                type: 'pdf',
+                size: '1.5 MB',
+                url: `https://raw.githubusercontent.com/${username}/${repoName}/main/decimal-problems.pdf`
+            },
+            {
+                name: 'Lesson Plan Template',
+                description: 'Editable template for mathematics lesson planning',
+                type: 'docx',
+                size: '0.8 MB',
+                url: `https://raw.githubusercontent.com/${username}/${repoName}/main/lesson-plan-template.docx`
+            },
+            {
+                name: 'Chimney Method Tutorial',
+                description: 'Step-by-step video demonstration of chimney multiplication',
+                type: 'mp4',
+                size: '18.7 MB',
+                url: `https://raw.githubusercontent.com/${username}/${repoName}/main/chimney-method-tutorial.mp4`
+            }
+        ];
+
+                              
                     renderGitHubResources(githubResources);
                     showNotification(`Loaded ${githubResources.length} resources from GitHub`);
                 }, 1500);
